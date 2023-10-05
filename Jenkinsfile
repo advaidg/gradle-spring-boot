@@ -31,7 +31,8 @@ pipeline {
                     sh """
                     ./gradlew publish \
                         -PnexusUsername=\$NEXUS_CREDENTIALS_USR \
-                        -PnexusPassword=\$NEXUS_CREDENTIALS_PSW
+                        -PnexusPassword=\$NEXUS_CREDENTIALS_PSW \
+                        -PnexusUrl=nexusPublicRepoUrl
                     """
                 }
             }
