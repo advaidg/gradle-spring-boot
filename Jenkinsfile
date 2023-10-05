@@ -38,13 +38,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        success {
-            // Optionally, you can perform additional actions on success
-        }
-        failure {
-            // Optionally, you can perform additional actions on failure
-        }
-    }
 }
