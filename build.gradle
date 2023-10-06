@@ -3,6 +3,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'maven-publish'
+	id("org.sonarqube") version "4.4.1.3373"
+	id "jacoco"
 }
 
 group = 'com.example'
@@ -41,6 +43,12 @@ publishing {
         }
     }
 }
+jacocoTestReport {
+	reports {
+		xml.enabled true
+	}
+}
+test.finalizedBy jacocoTestReport
 test {
 	useJUnitPlatform()
 }
