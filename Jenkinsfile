@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+  environment {
+        SONAR_CREDENTIALS = credentials('adminsonar')
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -13,6 +15,13 @@ pipeline {
             steps {
                 // Use the Gradle Wrapper to build your Spring Boot application
                 sh './gradlew clean build'
+            }
+        }
+    stage('SonarQube Scan') {
+            steps {
+                // Run SonarQube analysis using the SonarScanner for Gradle
+                sh './gradle sonarqube -Dsonar.login=${SONAR_CREDENTIALS}"
+'
             }
         }
 
