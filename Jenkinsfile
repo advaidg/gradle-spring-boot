@@ -20,18 +20,12 @@ pipeline {
             steps {
                 script {
                     // Configure Nexus credentials
-                    def nexusCredentials = [
-                        usernamePassword(
-                            credentialsId: 'a37fcb16-3f6e-49cd-a5f1-1e5184f50eab', // ID of your Nexus credentials in Jenkins
-                            variable: 'NEXUS_CREDENTIALS'
-                        )
-                    ]
 
                     // Publish artifacts to Nexus
                     sh """
                     ./gradlew publish \
-                        -PnexusUsername=\$NEXUS_CREDENTIALS_USR \
-                        -PnexusPassword=\$NEXUS_CREDENTIALS_PSW \
+                        -PnexusUsername=\$nexusUsername \
+                        -PnexusPassword=\$nexusPassword \
                         -PnexusUrl=nexusPublicRepoUrl
                     """
                 }
