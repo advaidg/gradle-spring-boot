@@ -29,7 +29,7 @@ publishing {
 		groupId = 'com.capgemini.test.poc'
 		artifactId="test-spring"
 		version='1.0.0'
-		
+		artifact bootJar
         }
     }
     repositories {
