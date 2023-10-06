@@ -2,6 +2,7 @@ pipeline {
     agent any
   environment {
         SONAR_CREDENTIALS = credentials('adminsonar')
+       NEXUS_CREDENTIALS = credentials('nexus_Cred')
     }
     stages {
         stage('Checkout') {
@@ -32,8 +33,8 @@ pipeline {
                     // Publish artifacts to Nexus
                     sh """
                     ./gradlew publish \
-                        -PnexusUsername=\$nexusUsername \
-                        -PnexusPassword=\$nexusPassword \
+                        -PnexusUsername=\"${NEXUS_CREDENTIALS_USR}" \
+                        -PnexusPassword=\"${NEXUS_CREDENTIALS_PSW}" \
                         -PnexusUrl=nexusPublicRepoUrl
                     """
                 }
