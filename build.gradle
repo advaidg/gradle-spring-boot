@@ -22,7 +22,22 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	// end::tests[]
 }
-
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = uri("$nexusPublicRepoUrl")
+            credentials {
+                username = project.findProperty("nexusUsername") ?: ""
+                password = project.findProperty("nexusPassword") ?: ""
+            }
+        }
+    }
+}
 test {
 	useJUnitPlatform()
 }
