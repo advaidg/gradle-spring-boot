@@ -21,7 +21,6 @@ pipeline {
             steps {
                 // Run SonarQube analysis using the SonarScanner for Gradle
                 sh "./gradle sonarqube -Dsonar.login=${SONAR_CREDENTIALS}"
-'
             }
         }
 
