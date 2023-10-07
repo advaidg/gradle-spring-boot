@@ -65,7 +65,7 @@ pipeline {
                     def kubeCtlCommand = "kubectl --kubeconfig=${kubeConfigFile}"
 
                     // Set the kubeconfig file
-                    withKubeConfig(credentialsId: '${kubeConfigSecret}', kubeconfigFile: kubeConfigFile) {
+                    withKubeConfig(credentialsId: '${kubeConfigSecret}', kubeconfigFile: '${kubeConfigFile}') {
 
                         sh "${kubeCtlCommand} apply -f deploy.yaml"
                     }
