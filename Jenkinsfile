@@ -4,7 +4,6 @@ pipeline {
     environment {
         SONAR_CREDENTIALS = credentials('adminsonar')
         NEXUS_CREDENTIALS = credentials('nexus_Cred')
-        DOCKER_REGISTRY_URL = env.NEXUS_REGISTRY_URL
         DOCKER_IMAGE_NAME = 'my-docker-image'
         DOCKER_IMAGE_TAG = 'latest'
     }
@@ -36,9 +35,9 @@ pipeline {
                 script {
                     // Build and tag the Docker image
                     sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ."
-                        sh "docker login -u $NEXUS_CREDENTIALS_USR -p $NEXUS_CREDENTIALS_PSW $DOCKER_REGISTRY_URL"
+                        sh "docker login -u $NEXUS_CREDENTIALS_USR -p $NEXUS_CREDENTIALS_PSW $NEXUS_REGISTRY_URL"
                     // Push the Docker image to the Nexus registry
-                    sh "docker push ${DOCKER_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+                    sh "docker push ${NEXUS_REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
                 }
             }
         }
