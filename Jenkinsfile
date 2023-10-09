@@ -62,14 +62,8 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
-                    def kubeConfigSecret = 'k8s'  // The name of the Kubernetes secret storing kubeconfig
-                    def kubeConfigFile = "${WORKSPACE}/kubeconfig.yaml"  // Local path to save kubeconfig
-                    def kubeCtlCommand = "kubectl --kubeconfig=${kubeConfigFile}"
-
-                    // Set the kubeconfig file
-                    withKubeConfig([credentialsId: 'k8s', serverUrl: 'http://k8s-poc-dns-uzgfkcxv.hcp.eastus.azmk8s.io:443']) {
                           sh 'kubectl apply -f deploy.yaml'
-                        }
+                    
                 }
             }
     }
