@@ -5,7 +5,7 @@ pipeline {
         SONAR_CREDENTIALS = credentials('adminsonar')
         NEXUS_CREDENTIALS = credentials('nexus_Cred')
         DOCKER_IMAGE_NAME = 'my-docker-image'
-        DOCKER_IMAGE_TAG = 'latest'
+        DOCKER_IMAGE_TAG = '2.0.0'
     }
 
     stages {
