@@ -1,3 +1,13 @@
+def scanMyCode() {
+    def sonarqubeUrl = env.SONARQUBE_URL
+    def sonarCredentialsId = 'Sonar_Creds'
+    def gradleCommand = './gradlew'
+    sh """
+        ${gradleCommand} sonarqube \\
+            -Dsonar.host.url=${sonarqubeUrl} \\
+            -Dsonar.login=\$(cat \${JENKINS_HOME}/secrets/\${sonarCredentialsId})
+    """
+}
 pipeline {
     agent any
 
@@ -26,7 +36,8 @@ pipeline {
         stage('SonarQube Scan') {
             steps {
                 // Run SonarQube analysis using the SonarScanner for Gradle
-                sh "./gradlew sonarqube -Dsonar.login=${SONAR_CREDENTIALS} -Dsonar.host.url=${SONARQUBE_URL}"
+                scanMyCode()
+                // sh "./gradlew sonarqube -Dsonar.login=${SONAR_CREDENTIALS} -Dsonar.host.url=${SONARQUBE_URL}"
             }
         }
 
