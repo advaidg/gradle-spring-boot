@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -29,7 +29,7 @@ publishing {
         mavenJava(MavenPublication) {
 		groupId = 'com.capgemini.test.poc'
 		artifactId="test-spring"
-		version='1.0.0'
+		version='2.0.0'
 		artifact bootJar
         }
     }
