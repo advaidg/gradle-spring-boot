@@ -57,6 +57,8 @@ pipeline {
                 """
             }
         }
+
+        
         stage('Deploy to AKS') {
             steps {
                 script {
@@ -65,10 +67,9 @@ pipeline {
                     def kubeCtlCommand = "kubectl --kubeconfig=${kubeConfigFile}"
 
                     // Set the kubeconfig file
-                    withKubeConfig(credentialsId: '${kubeConfigSecret}', kubeconfigFile: '${kubeConfigFile}') {
-
-                        sh "${kubeCtlCommand} apply -f deploy.yaml"
-                    }
+                    withKubeConfig([credentialsId: 'k8s', serverUrl: 'k8s-poc-dns-uzgfkcxv.hcp.eastus.azmk8s.io']) {
+                          sh 'kubectl apply -f deploy.yaml'
+                        }
                 }
             }
     }
