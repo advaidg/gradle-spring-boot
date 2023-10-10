@@ -6,7 +6,7 @@ def scanMyCode() {
 
     // Ensure that the SonarQube token is available
     def sonarToken = null
-    withCredentials([string(credentialsId: 'admin_sonar', variable: 'SONAR_TOKEN')]) {
+    withCredentials([string(credentialsId: 'adminsonar', variable: 'SONAR_TOKEN')]) {
         sonarToken = env.SONAR_TOKEN
     }
     if (!sonarToken) {
