@@ -1,20 +1,22 @@
 def scanMyCode() {
-    // Fetching the SonarQube token from Jenkins credentials
-    withCredentials([string(credentialsId: 'adminsonar', variable: 'SONAR_TOKEN')]) {
-        // Setting up the environment for SonarQube
-        withEnv(["SONARQUBE_HOME=${tool 'SonarQubeScanner'}", 
-                 "SONAR_HOST_URL=${env.SONARQUBE_URL}", 
-                 "SONAR_AUTH_TOKEN=${SONAR_TOKEN}"]) {
-            // Running the SonarQube analysis
-            sh '''
-                echo "Starting SonarQube analysis..."
-                ./gradlew sonarqube \
-                    -Dsonar.projectKey=myProject \
-                    -Dsonar.host.url=$SONAR_HOST_URL \
-                    -Dsonar.login=$SONAR_AUTH_TOKEN
-                echo "SonarQube analysis completed."
-            '''
-        }
+    // Ensure the SonarQube environment variable is set
+    if (!env.SONARQUBE_URL) {
+        error("SONARQUBE_URL environment variable is not set")
+    }
+
+    // Ensure the SonarQube credentials are available
+    def sonarCredId = 'adminsonar'
+    if (!sonarCredId) {
+        error("SonarQube credentials ID is not set")
+    }
+
+    // Perform the SonarQube analysis
+    withCredentials([string(credentialsId: sonarCredId, variable: 'SONAR_TOKEN')]) {
+        sh """
+            ./gradlew sonarqube \
+                -Dsonar.host.url=${env.SONARQUBE_URL} \
+                -Dsonar.login=${SONAR_TOKEN}
+        """
     }
 }
 pipeline {
