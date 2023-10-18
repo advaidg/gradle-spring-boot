@@ -1,19 +1,16 @@
 def scanMyCode() {
-    // Ensure the SonarQube environment variable is set
-    if (!env.SONARQUBE_URL) {
-        error("SONARQUBE_URL environment variable is not set")
-    }
+    // Ensure that the SonarQube environment variables are set
+    assert env.SONARQUBE_URL != null : "SONARQUBE_URL environment variable is not set"
 
-    // Ensure the SonarQube credentials are available
+    // Ensure that the SonarQube credentials are available
     def sonarCredId = 'adminsonar'
-    if (!sonarCredId) {
-        error("SonarQube credentials ID is not set")
-    }
+    assert sonarCredId != null : "SonarQube credentials ID is not set"
 
     // Perform the SonarQube analysis
     withCredentials([string(credentialsId: sonarCredId, variable: 'SONAR_TOKEN')]) {
         sh """
             ./gradlew sonarqube \
+                -Dsonar.projectKey=my_project \
                 -Dsonar.host.url=${env.SONARQUBE_URL} \
                 -Dsonar.login=${SONAR_TOKEN}
         """
